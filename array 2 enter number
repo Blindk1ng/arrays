@@ -1,0 +1,40 @@
+#include <iostream>
+ 
+void main() {
+    // Формируем статический массив 5 на 5
+    const int SIZE = 5;
+    int arr[SIZE][SIZE] = {0};
+    
+    // Заполнение "случайными" числами массив
+    for (int i = 0; i < SIZE; i++)
+        for (int j = 0; j < SIZE; j++)
+            arr[i][j] = rand() % 9+0;
+ 
+    // Вывод полученного двумерного массива
+    for (int i = 0; i < SIZE; i++) {
+        for (int j = 0; j < SIZE; j++)
+            std::cout << arr[i][j]<<"\t";
+        
+        std::cout << std::endl;
+    }
+    std::cout << std::endl;
+ 
+    // Формируем статический одномерный массив
+    const int newSIZE = 10;
+    int arr1[newSIZE] = { 0 };
+    int k = 0;
+    
+    // Переписываем в одномерный массив все элементы, расположенные выше главной диагонали
+    for (int i = 0; i < SIZE; i++) 
+        for (int j = i+1; j < SIZE; j++) {
+            arr1[k] = arr[i][j];
+            k++;
+        }
+        
+    // Выводим одномерный массив
+    for (int i = 0; i < newSIZE; i++)
+        std::cout << arr1[i] << "\t";
+ 
+    std::cout << std::endl;
+    std::cin.get();
+}
