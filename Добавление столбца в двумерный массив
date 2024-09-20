@@ -1,0 +1,66 @@
+#include <iostream>
+#include <cstdlib>
+using namespace std;
+int ** creat(int &n, int &m)
+{
+    cout << "n = ";
+    cin >> n;
+    cout << "m = ";
+    cin >> m;
+    int **mas = new int *[n];
+    for (int i = 0; i < n; ++i)
+    // опредилили максимальное количество столбцов
+    mas [i] = new int[2 * m];
+    for (int i = 0; i < n; ++i)
+    for (int j = 0; j < m; ++j)
+    {
+        cout << "mas[" << i << "][" << j << "] = ";
+        cin >> mas [i][j];
+    }
+    return mas;
+}
+void print(int **mas, int n, int m)
+{
+    for (int i = 0; i < n; i++, cout << endl)
+    for (int j = 0; j < m; j++)
+     cout << mas[i][j] << "\t";
+}
+void deleteMas(int **mas, int n)
+{ 
+    for (int i = 0; i < n; i++)
+    delete[] mas[i];
+    delete[] mas;
+}
+int main()
+{
+    int n, m, k;
+    int **a = creat(n,m); // создаем и заполняем матрицу a 
+    // m - текущее количество столбцов, m2 - максимально возможное
+    int m2 = 2 * m;
+    print(a, n, m); // выводим первоначальный массив
+    cout << "k = ";
+    cin >> k; // вводим номер столбца для добавления
+    if (k < 0 || k > m - 1 || m + 1 > m2)
+    cout << "error";
+    /* если введенный номер столбца отрицательный или больше номера последнего значимого столбца в массиве, или после вставки столбца размерность массива
+    станет больше допустимой, то выдаем сообщение об ошибке, иначе */
+    else 
+    {
+        //выполняем поэлементный сдвиг столбцов
+        for (int j = m; j > k; --j)
+        for (int i = 0; i < n; ++i)
+        a[i][j] = a[i][j - 1];
+        // увеличиваем текущее количество столбцов в массиве
+        ++m;
+        // вводим новые данные в k-й столбец
+        for (int i = 0; i < n; ++i)
+        {
+            cout << "a[" << "][" << "] = ";
+            cin >> a[i][k];
+        }
+        print(a, n, m); // выводим измененный массив 
+    } 
+    deleteMas(a, n);
+    return 0;
+}
+    

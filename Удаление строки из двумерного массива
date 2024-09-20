@@ -1,0 +1,59 @@
+#include <iostream>
+#include <cstdlib>
+using namespace std;
+// функция создаёт и заполняет двумерный массив 
+int ** creat(int &n, int &m)
+{
+    cout << "n = ";
+    cin >> n;
+    cout << "m = ";
+    cin >> m;
+    int **mas = new int *[n];
+    for (int i = 0; i < n; ++i)
+    mas[i] = new int [m];
+    for (int i = 0; i < n; ++i)
+    for (int j = 0; j < m; ++j)
+    {
+        cout << "mas[" << i << "][" << j << "] = ";
+        cin >> mas[i][j];
+    }
+    return mas;
+}
+// функция выводит двумерную матрицу на экран в виде таблицы
+void print (int **mas, int n, int m)
+{
+    for (int i = 0; i < n; i++, cout << endl)
+    for (int j = 0; j < m; j++)
+    cout << mas[i][j] << "\t";
+}
+// функция освобождает память, выделенную под массив
+void deleteMas(int **mas, int n)
+{
+    for (int i = 0;i<n; i++)
+    delete [] mas[i];
+    delete [] mas;
+}
+int main()
+{
+    int n, m, k;
+    int **a = creat(n,m);
+    print(a,n,m); // выводим первоначальный массив
+    cout << "k = ";
+    cin >> k; // вводим номер строки для удаления
+    /* Если номер строки отрицательный или больше номера последнего элемента, то выводим сообщение об ошибке */
+    if (k < 0 || k > n-1)
+    cout << "errror";
+    else
+    {
+        // освобождаем память, выделенную для k-й строки массива
+        delete [] a[k];
+        for (int i = k; i < n-1; ++i)
+        // переадресуем указатели, начиная с k-й строки 
+        a[i] = a[i + 1];
+        a[n - 1] = NULL; // указатель на n-1 строку обнуляем
+        --n; // уменьшаем текущее количество строк 
+        print(a, n, m); // выводим измененный массив
+    }
+    deleteMas(a, n); // освобождаем память
+    return 0;
+}

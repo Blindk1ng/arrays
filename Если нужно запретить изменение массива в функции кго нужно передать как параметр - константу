@@ -1,0 +1,2 @@
+int sum (const int **mas, const int n)
+{ ... }
